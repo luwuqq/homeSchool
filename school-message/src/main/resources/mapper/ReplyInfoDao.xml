@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zfy.school.message.dao.ReplyInfoDao">
+
+    <resultMap type="cn.zfy.school.message.entity.ReplyInfo" id="ReplyInfoMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="messageId" column="message_id" jdbcType="INTEGER"/>
+        <result property="authorAccount" column="author_account" jdbcType="INTEGER"/>
+        <result property="authorName" column="author_name" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="date" column="date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="replyMessage">
+        insert into reply_info
+            (message_id, author_account, author_name, content, date)
+        values (#{messageId}, #{authorAccount}, #{authorName}, #{content}, #{date})
+    </insert>
+
+    <delete id="deleteReply">
+        delete from reply_info
+        where id = #{id}
+    </delete>
+
+    <select id="selectReplyInfoByMessageId" resultMap="ReplyInfoMap" resultType="arraylist">
+        SELECT * FROM reply_info
+        WHERE message_id = #{messageId}
+            LIMIT #{startNumber}, #{pageSize}
+    </select>
+
+</mapper>
+
